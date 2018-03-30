@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.embed.swing.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="1266.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur">
+   <center>
+      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" onKeyPressed="#keyCb" pannable="true" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+         <content>
+            <Pane fx:id="plateau" onMouseClicked="#addElementOnPanel" prefHeight="3000.0" prefWidth="3000.0" style="-fx-background-image: url(&quot;cuptile_grid.png&quot;);" />
+         </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <Button mnemonicParsing="false" onAction="#addBeginBloc" text="Begin" />
+          <Button mnemonicParsing="false" onAction="#addLedBloc" text="Leds" />
+            <Button mnemonicParsing="false" onAction="#addDelayBloc" text="Delay" />
+            <Button mnemonicParsing="false" onAction="#addLoopBloc" text="Boucle" />
+            <Button mnemonicParsing="false" onAction="#addEndBloc" text="End" />
+            <Separator orientation="VERTICAL" />
+            <Button mnemonicParsing="false" onAction="#addConnection1Bloc" text="Lien Direct" />
+            <Button mnemonicParsing="false" onAction="#addConnection2Bloc" text="Lien Indirect" />
+            <Button mnemonicParsing="false" onAction="#addConnection3Bloc" text="Lien Boucle" />
+            <Separator orientation="VERTICAL" />
+            <Button mnemonicParsing="false" onAction="#addBeagleBoneBloc" text="BeagleBone" />
+            <Button mnemonicParsing="false" onAction="#addArduinoBloc" text="Arduino" />
+            <Separator orientation="VERTICAL" />
+            <Button mnemonicParsing="false" onAction="#simulate" text="Simuler" />
+            <Separator orientation="VERTICAL" />
+            <Label fx:id="simLabel" text="Simulation en cours" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+        </items>
+      </ToolBar>
+   </top>
+</BorderPane>
