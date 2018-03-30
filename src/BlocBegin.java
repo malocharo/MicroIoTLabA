@@ -56,9 +56,11 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Effacer le dessin d'avant
-				// Activier l'affichage des contours 
+				// Activier l'affichage des contours
+                drawContour = true;
 				// Afficher le curseur main
-                setCursor(Cursor.HAND);
+
+                Main.controleur.plateau.setCursor(Cursor.HAND);
 				// Dessiner
                 draw();
 			}
@@ -68,7 +70,7 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Activer le scroll du panneau
-                setCursor(Cursor.HAND);
+               Main.controleur.plateau.setCursor(Cursor.HAND);
                 draw();
 				// Afficher le curseur main
 			}
@@ -82,6 +84,7 @@ public class BlocBegin extends Bloc {
                 {
 
                 }
+
 					// Supprimer le bloc actuel
 					// Supprimer ses pins
 					// Supprimer les connections liés
@@ -93,7 +96,8 @@ public class BlocBegin extends Bloc {
 			public void handle(MouseEvent t) {
 				// Effacer le dessin d'avant
 				// Désactiver le dessin des contours
-                setCursor(Cursor.DEFAULT);
+                drawContour = false;
+                Main.controleur.plateau.setCursor(Cursor.DEFAULT);
 				// Afficher le curseur par défaut
 				// Dessiner
                 draw();
@@ -116,7 +120,7 @@ public class BlocBegin extends Bloc {
 			public void handle(MouseEvent t) {
 				// Désactiver le scroll du panneau
 				// Afficher le curseur Main
-                setCursor(Cursor.DEFAULT);
+               Main.controleur.plateau.setCursor(Cursor.HAND);
 				// Mettre à jour la position du bloc
                 x = t.getX() - dx;
                 y = t.getY() - dy;
