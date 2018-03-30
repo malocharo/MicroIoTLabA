@@ -56,6 +56,7 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Effacer le dessin d'avant
+				//Main.controleur.plateau.getChildren().remove(Main.controleur.getBeginBloc());
 				// Activier l'affichage des contours
                 drawContour = true;
 				// Afficher le curseur main
@@ -70,7 +71,9 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Activer le scroll du panneau
-               Main.controleur.plateau.setCursor(Cursor.HAND);
+
+
+                Main.controleur.plateau.setCursor(Cursor.HAND);
                 draw();
 				// Afficher le curseur main
 			}
@@ -82,12 +85,17 @@ public class BlocBegin extends Bloc {
 				// Dans le cas où le nombre de clics est égal à 2
                 if(t.getClickCount() == 2)
                 {
+                    Main.controleur.plateau.getChildren().remove(BlocBegin.this);
+                    Main.controleur.deleteFreeWires(getPinOut());
+                    Main.controleur.plateau.getChildren().remove(getPinOut());
+                    draw();
 
                 }
 
 					// Supprimer le bloc actuel
 					// Supprimer ses pins
 					// Supprimer les connections liés
+
 			}
 		});
 		
@@ -108,8 +116,9 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Mettre à jour le décalage du dessin par rapport à la souris : dx, dy
-                x = t.getX() - dx;
-                y = t.getY() - dy;
+                BlocBegin.this.x = t.getX() - dx;
+                BlocBegin.this.y = t.getY() - dy;
+
                 draw();
 
 			}
@@ -119,11 +128,15 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Désactiver le scroll du panneau
+
+               // Main.controleur.scroll.
 				// Afficher le curseur Main
                Main.controleur.plateau.setCursor(Cursor.HAND);
 				// Mettre à jour la position du bloc
-                x = t.getX() - dx;
-                y = t.getY() - dy;
+                BlocBegin.this.x = t.getX() - dx;
+                BlocBegin.this.y = t.getY() - dy;
+
+
                 draw();
 				// Mettre à jour la positions de ses pins
 				// Mettre à jour les connections

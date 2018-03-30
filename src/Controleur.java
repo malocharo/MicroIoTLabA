@@ -43,6 +43,7 @@ public class Controleur implements Initializable {
 			BlocBegin blocBegin = new BlocBegin(e.getX(), e.getY());
 			plateau.getChildren().add(blocBegin);
 			blocBegin.allToFront();
+			choix = NONE;
 		}
 		if(choix == END) {
 			BlocEnd blocEnd = new BlocEnd(e.getX(), e.getY());
