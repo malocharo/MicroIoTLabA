@@ -36,7 +36,7 @@ public class Controleur implements Initializable {
 	public static int step = 0;
 	public static int wireType = 0;
 	
-	private int choix ;
+	protected int choix ;
 	
 	public void addElementOnPanel(MouseEvent e) {
 		if(choix == BEGIN) {

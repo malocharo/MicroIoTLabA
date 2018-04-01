@@ -56,7 +56,6 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Effacer le dessin d'avant
-				//Main.controleur.plateau.getChildren().remove(Main.controleur.getBeginBloc());
 				// Activier l'affichage des contours
                 drawContour = true;
 				// Afficher le curseur main
@@ -71,6 +70,7 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Activer le scroll du panneau
+				Main.controleur.scroll.setPannable(true);
 
 
                 Main.controleur.plateau.setCursor(Cursor.HAND);
@@ -103,6 +103,7 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Effacer le dessin d'avant
+				//Main.controleur.choix = Controleur.BEGIN;
 				// Désactiver le dessin des contours
                 drawContour = false;
                 Main.controleur.plateau.setCursor(Cursor.DEFAULT);
@@ -116,8 +117,9 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Mettre à jour le décalage du dessin par rapport à la souris : dx, dy
-                BlocBegin.this.x = t.getX() - dx;
-                BlocBegin.this.y = t.getY() - dy;
+                dx = t.getX() - x;
+                dy = t.getY() - y;
+
 
                 draw();
 
@@ -128,16 +130,21 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Désactiver le scroll du panneau
+				Main.controleur.scroll.setPannable(false);
 
-               // Main.controleur.scroll.
+
 				// Afficher le curseur Main
-               Main.controleur.plateau.setCursor(Cursor.HAND);
+               Main.controleur.plateau.setCursor(Cursor.CLOSED_HAND);
 				// Mettre à jour la position du bloc
-                BlocBegin.this.x = t.getX() - dx;
-                BlocBegin.this.y = t.getY() - dy;
+                x =  t.getX() - dx;
+                y = t.getY() - dy ;
+                BlocBegin.this.setTranslateX(x);
+                BlocBegin.this.setTranslateY(y);
+                System.out.println("x =" +x+ " y ="+y);
+                System.out.println("Mx = " + t.getX() + "My" + t.getY());
 
 
-                draw();
+				draw();
 				// Mettre à jour la positions de ses pins
 				// Mettre à jour les connections
 			}
