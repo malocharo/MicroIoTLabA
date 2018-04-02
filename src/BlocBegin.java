@@ -3,12 +3,14 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class BlocBegin extends Bloc {
 
 	protected PinOut pinOut ;
+	private int count;
 	
 	public void draw() {
 		gc.clearRect(0, 0, sizeX, sizeY);
@@ -35,6 +37,7 @@ public class BlocBegin extends Bloc {
 	
 	public BlocBegin(double x, double y) {
 		super(x, y);
+		count = 0;
 		sizeX = 120;
 		sizeY = 30;
 		init();		
@@ -112,16 +115,22 @@ public class BlocBegin extends Bloc {
                 draw();
 			}
 		});
-		
+
 		addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent t) {
 				// Mettre à jour le décalage du dessin par rapport à la souris : dx, dy
-                dx = t.getX() - x;
-                dy = t.getY() - y;
-
+				System.out.println("On mouse pressed N "+count);
+				System.out.println("Mx= "+t.getX()+"My= "+t.getY()+"Scx= "+t.getSceneX()+"Scy= "+t.getSceneY());
+				System.out.println("x= "+x+"y= "+y+"dx= "+dx+"dy= "+dy);
+				count++;
+				x = t.getX();
+				y = t.getY();
+                dx = t.getSceneX() ;
+                dy = t.getSceneY() ;
 
                 draw();
+
 
 			}
 		});
@@ -136,12 +145,17 @@ public class BlocBegin extends Bloc {
 				// Afficher le curseur Main
                Main.controleur.plateau.setCursor(Cursor.CLOSED_HAND);
 				// Mettre à jour la position du bloc
-                x =  t.getX() - dx;
-                y = t.getY() - dy ;
-                BlocBegin.this.setTranslateX(x);
-                BlocBegin.this.setTranslateY(y);
-                System.out.println("x =" +x+ " y ="+y);
-                System.out.println("Mx = " + t.getX() + "My" + t.getY());
+				double offsetX = t.getSceneX() - dx;
+				double offsetY = t.getSceneY() - dy;
+                x =  offsetX;
+                y =  offsetY;
+                /*BlocBegin.this.setTranslateX(x);
+                BlocBegin.this.setTranslateY(y);*/
+				((BlocBegin)(t.getSource())).setTranslateX(x);
+				((BlocBegin)(t.getSource())).setTranslateY(y);
+
+                /*System.out.println("x =" +x+ " y ="+y);
+                System.out.println("Mx = " + t.getX() + "My = " + t.getY());*/
 
 
 				draw();
