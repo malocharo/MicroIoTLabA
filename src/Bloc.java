@@ -26,5 +26,7 @@ public abstract class Bloc extends Canvas implements BlocToExecute {
 		setHeight(sizeY);		
 		gc = getGraphicsContext2D();
 	}
+
+
 		
 }

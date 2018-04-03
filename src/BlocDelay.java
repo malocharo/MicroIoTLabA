@@ -50,6 +50,11 @@ public class BlocDelay extends BlocWith2Pins {
 	@Override
 	public void execute() {
 		// Mettre une attente égale à delay
+		try {
+			Thread.sleep((long)this.delay);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 		
 }

@@ -24,11 +24,11 @@ public class Main extends Application {
 		stage.show();
 	}
 	
-	//@Override
-	/*public void init(){
+	@Override
+	public void init(){
 		if(SerialCommunication.sender==null)
 			new SerialCommunication();
-	}*/
+	}
 	
 	@Override
 	public void stop(){

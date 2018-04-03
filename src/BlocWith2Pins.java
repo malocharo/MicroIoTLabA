@@ -39,6 +39,9 @@ public abstract class BlocWith2Pins extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {				
 				// Voir le block Begin
+				BlocWith2Pins.this.drawContour = true;
+				BlocWith2Pins.this.setCursor(Cursor.HAND);
+				BlocWith2Pins.this.draw();
 			}
 		});
 		
@@ -46,6 +49,8 @@ public abstract class BlocWith2Pins extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				Main.controleur.scroll.setPannable(true);
+				BlocWith2Pins.this.setCursor(Cursor.HAND);
 			}
 		});
 		
@@ -53,6 +58,9 @@ public abstract class BlocWith2Pins extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				BlocWith2Pins.this.drawContour = false;
+				BlocWith2Pins.this.setCursor(Cursor.DEFAULT);
+				BlocWith2Pins.this.draw();
 			}
 		});
 		
@@ -60,6 +68,8 @@ public abstract class BlocWith2Pins extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				BlocWith2Pins.this.dx = t.getX();
+				BlocWith2Pins.this.dy = t.getY();
 			}
 		});
 		
@@ -68,6 +78,14 @@ public abstract class BlocWith2Pins extends Bloc {
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
 				// Ici il y a un composant en plus : le TextField
+				if (t.getClickCount() == 2) {
+					Main.controleur.plateau.getChildren().remove(BlocWith2Pins.this);
+					Main.controleur.plateau.getChildren().remove(BlocWith2Pins.this.pinIn);
+					Main.controleur.plateau.getChildren().remove(BlocWith2Pins.this.pinOut);
+					Main.controleur.plateau.getChildren().remove(BlocWith2Pins.this.tf);
+					Main.controleur.deleteFreeWires(BlocWith2Pins.this.pinIn);
+					Main.controleur.deleteFreeWires(BlocWith2Pins.this.pinOut);
+				}
 			}
 		});
 				
@@ -75,6 +93,17 @@ public abstract class BlocWith2Pins extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				Main.controleur.scroll.setPannable(false);
+				BlocWith2Pins.this.setCursor(Cursor.CLOSED_HAND);
+				BlocWith2Pins.this.setLayoutX(t.getX() + BlocWith2Pins.this.getLayoutX() - BlocWith2Pins.this.dx);
+				BlocWith2Pins.this.setLayoutY(t.getY() + BlocWith2Pins.this.getLayoutY() - BlocWith2Pins.this.dy);
+				BlocWith2Pins.this.pinIn.setLayoutX(t.getX() + BlocWith2Pins.this.pinIn.getLayoutX() - BlocWith2Pins.this.dx);
+				BlocWith2Pins.this.pinIn.setLayoutY(t.getY() + BlocWith2Pins.this.pinIn.getLayoutY() - BlocWith2Pins.this.dy);
+				BlocWith2Pins.this.pinOut.setLayoutX(t.getX() + BlocWith2Pins.this.pinOut.getLayoutX() - BlocWith2Pins.this.dx);
+				BlocWith2Pins.this.pinOut.setLayoutY(t.getY() + BlocWith2Pins.this.pinOut.getLayoutY() - BlocWith2Pins.this.dy);
+				BlocWith2Pins.this.tf.setLayoutX(t.getX() + BlocWith2Pins.this.tf.getLayoutX() - BlocWith2Pins.this.dx);
+				BlocWith2Pins.this.tf.setLayoutY(t.getY() + BlocWith2Pins.this.tf.getLayoutY() - BlocWith2Pins.this.dy);
+				Main.controleur.updateWires();
 			}
 		});
 	}

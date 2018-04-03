@@ -73,11 +73,7 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Activer le scroll du panneau
-				Main.controleur.scroll.setPannable(true);
-
-
-                Main.controleur.plateau.setCursor(Cursor.HAND);
-                draw();
+				BlocBegin.this.setCursor(Cursor.HAND);
 				// Afficher le curseur main
 			}
 		});
@@ -86,14 +82,11 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Dans le cas où le nombre de clics est égal à 2
-                if(t.getClickCount() == 2)
-                {
-                    Main.controleur.plateau.getChildren().remove(BlocBegin.this);
-                    Main.controleur.deleteFreeWires(getPinOut());
-                    Main.controleur.plateau.getChildren().remove(getPinOut());
-                    draw();
-
-                }
+				if (t.getClickCount() == 2) {
+					Main.controleur.plateau.getChildren().remove(BlocBegin.this);
+					Main.controleur.plateau.getChildren().remove(BlocBegin.this.pinOut);
+					Main.controleur.deleteFreeWires(BlocBegin.this.pinOut);
+				}
 
 					// Supprimer le bloc actuel
 					// Supprimer ses pins
@@ -108,11 +101,13 @@ public class BlocBegin extends Bloc {
 				// Effacer le dessin d'avant
 				//Main.controleur.choix = Controleur.BEGIN;
 				// Désactiver le dessin des contours
-                drawContour = false;
-                Main.controleur.plateau.setCursor(Cursor.DEFAULT);
+				BlocBegin.this.gc.clearRect(0.0D, 0.0D, BlocBegin.this.sizeX, BlocBegin.this.sizeY);
+				BlocBegin.this.drawContour = false;
+				BlocBegin.this.setCursor(Cursor.DEFAULT);
+				BlocBegin.this.draw();
 				// Afficher le curseur par défaut
 				// Dessiner
-                draw();
+
 			}
 		});
 
@@ -120,16 +115,8 @@ public class BlocBegin extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Mettre à jour le décalage du dessin par rapport à la souris : dx, dy
-				System.out.println("On mouse pressed N "+count);
-				System.out.println("Mx= "+t.getX()+"My= "+t.getY()+"Scx= "+t.getSceneX()+"Scy= "+t.getSceneY());
-				System.out.println("x= "+x+"y= "+y+"dx= "+dx+"dy= "+dy);
-				count++;
-				x = t.getX();
-				y = t.getY();
-                dx = t.getSceneX() ;
-                dy = t.getSceneY() ;
-
-                draw();
+				BlocBegin.this.dx = t.getX();
+				BlocBegin.this.dy = t.getY();
 
 
 			}
@@ -138,29 +125,24 @@ public class BlocBegin extends Bloc {
 		addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent t) {
+
 				// Désactiver le scroll du panneau
 				Main.controleur.scroll.setPannable(false);
-
-
 				// Afficher le curseur Main
                Main.controleur.plateau.setCursor(Cursor.CLOSED_HAND);
 				// Mettre à jour la position du bloc
-				double offsetX = t.getSceneX() - dx;
-				double offsetY = t.getSceneY() - dy;
-                x =  offsetX;
-                y =  offsetY;
-                /*BlocBegin.this.setTranslateX(x);
-                BlocBegin.this.setTranslateY(y);*/
-				((BlocBegin)(t.getSource())).setTranslateX(x);
-				((BlocBegin)(t.getSource())).setTranslateY(y);
-
-                /*System.out.println("x =" +x+ " y ="+y);
-                System.out.println("Mx = " + t.getX() + "My = " + t.getY());*/
+				BlocBegin.this.setLayoutX(t.getX() + BlocBegin.this.getLayoutX() - BlocBegin.this.dx);
+				BlocBegin.this.setLayoutY(t.getY() + BlocBegin.this.getLayoutY() - BlocBegin.this.dy);
+				BlocBegin.this.pinOut.setLayoutX(t.getX() + BlocBegin.this.pinOut.getLayoutX() - BlocBegin.this.dx);
+				BlocBegin.this.pinOut.setLayoutY(t.getY() + BlocBegin.this.pinOut.getLayoutY() - BlocBegin.this.dy);
+				Main.controleur.updateWires();
 
 
 				draw();
 				// Mettre à jour la positions de ses pins
 				// Mettre à jour les connections
+
+
 			}
 		});
 	}

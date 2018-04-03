@@ -208,6 +208,18 @@ public class CardWith4Leds extends Canvas implements Card {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				if (t.getClickCount() == 2) {
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this);
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this.image);
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this.cb1);
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this.cb2);
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this.cb3);
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this.cb4);
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this.sp1);
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this.sp2);
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this.sp3);
+					Main.controleur.plateau.getChildren().remove(CardWith4Leds.this.sp4);
+				}
 			}
 		});
 		
@@ -215,6 +227,9 @@ public class CardWith4Leds extends Canvas implements Card {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				CardWith4Leds.this.drawContour = true;
+				CardWith4Leds.this.setCursor(Cursor.HAND);
+				CardWith4Leds.this.draw();
 			}
 		});
 		
@@ -222,6 +237,8 @@ public class CardWith4Leds extends Canvas implements Card {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				Main.controleur.scroll.setPannable(true);
+				CardWith4Leds.this.setCursor(Cursor.HAND);
 			}
 		});
 		
@@ -229,6 +246,9 @@ public class CardWith4Leds extends Canvas implements Card {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				CardWith4Leds.this.drawContour = false;
+				CardWith4Leds.this.setCursor(Cursor.DEFAULT);
+				CardWith4Leds.this.draw();
 			}
 		});
 		
@@ -236,6 +256,8 @@ public class CardWith4Leds extends Canvas implements Card {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				CardWith4Leds.this.dx = t.getX();
+				CardWith4Leds.this.dy = t.getY();
 			}
 		});
 		
@@ -243,6 +265,27 @@ public class CardWith4Leds extends Canvas implements Card {
 			@Override
 			public void handle(MouseEvent t) {
 				// Voir le block Begin
+				Main.controleur.scroll.setPannable(false);
+				CardWith4Leds.this.setCursor(Cursor.CLOSED_HAND);
+				CardWith4Leds.this.setLayoutX(t.getX() + CardWith4Leds.this.getLayoutX() - CardWith4Leds.this.dx);
+				CardWith4Leds.this.setLayoutY(t.getY() + CardWith4Leds.this.getLayoutY() - CardWith4Leds.this.dy);
+				CardWith4Leds.this.cb1.setLayoutX(t.getX() + CardWith4Leds.this.cb1.getLayoutX() - CardWith4Leds.this.dx);
+				CardWith4Leds.this.cb1.setLayoutY(t.getY() + CardWith4Leds.this.cb1.getLayoutY() - CardWith4Leds.this.dy);
+				CardWith4Leds.this.cb2.setLayoutX(t.getX() + CardWith4Leds.this.cb2.getLayoutX() - CardWith4Leds.this.dx);
+				CardWith4Leds.this.cb2.setLayoutY(t.getY() + CardWith4Leds.this.cb2.getLayoutY() - CardWith4Leds.this.dy);
+				CardWith4Leds.this.cb3.setLayoutX(t.getX() + CardWith4Leds.this.cb3.getLayoutX() - CardWith4Leds.this.dx);
+				CardWith4Leds.this.cb3.setLayoutY(t.getY() + CardWith4Leds.this.cb3.getLayoutY() - CardWith4Leds.this.dy);
+				CardWith4Leds.this.cb4.setLayoutX(t.getX() + CardWith4Leds.this.cb4.getLayoutX() - CardWith4Leds.this.dx);
+				CardWith4Leds.this.cb4.setLayoutY(t.getY() + CardWith4Leds.this.cb4.getLayoutY() - CardWith4Leds.this.dy);
+				CardWith4Leds.this.sp1.setLayoutX(t.getX() + CardWith4Leds.this.sp1.getLayoutX() - CardWith4Leds.this.dx);
+				CardWith4Leds.this.sp1.setLayoutY(t.getY() + CardWith4Leds.this.sp1.getLayoutY() - CardWith4Leds.this.dy);
+				CardWith4Leds.this.sp2.setLayoutX(t.getX() + CardWith4Leds.this.sp2.getLayoutX() - CardWith4Leds.this.dx);
+				CardWith4Leds.this.sp2.setLayoutY(t.getY() + CardWith4Leds.this.sp2.getLayoutY() - CardWith4Leds.this.dy);
+				CardWith4Leds.this.sp3.setLayoutX(t.getX() + CardWith4Leds.this.sp3.getLayoutX() - CardWith4Leds.this.dx);
+				CardWith4Leds.this.sp3.setLayoutY(t.getY() + CardWith4Leds.this.sp3.getLayoutY() - CardWith4Leds.this.dy);
+				CardWith4Leds.this.sp4.setLayoutX(t.getX() + CardWith4Leds.this.sp4.getLayoutX() - CardWith4Leds.this.dx);
+				CardWith4Leds.this.sp4.setLayoutY(t.getY() + CardWith4Leds.this.sp4.getLayoutY() - CardWith4Leds.this.dy);
+				Main.controleur.updateWires();
 			}
 		});
 	}
@@ -255,13 +298,20 @@ public class CardWith4Leds extends Canvas implements Card {
 		led4=(leds.charAt(3) == '1');
 		
 		// mettre à jour les leds
-		
-		if(SerialCommunication.sender!=null) {
-			// A compléter : mettre à jour les vraies leds
+		this.cb1.setSelected(leds.charAt(0) == '1');
+		this.cb2.setSelected(leds.charAt(1) == '1');
+		this.cb3.setSelected(leds.charAt(2) == '1');
+		this.cb4.setSelected(leds.charAt(3) == '1');
+		if (SerialCommunication.sender != null) {
+			SerialCommunication.envoyer((char)(leds.charAt(0) == '1' ? 'a' : 'b'));
+			SerialCommunication.envoyer((char)(leds.charAt(1) == '1' ? 'c' : 'd'));
+			SerialCommunication.envoyer((char)(leds.charAt(2) == '1' ? 'e' : 'f'));
+			SerialCommunication.envoyer((char)(leds.charAt(3) == '1' ? 'g' : 'h'));
 		}
-		
-		drawContours();
-		drawLeds();
+
+		this.drawContours();
+		this.drawLeds();
+
 	}
 		
 	@Override

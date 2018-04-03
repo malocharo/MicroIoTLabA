@@ -64,6 +64,10 @@ public class BlocEnd extends Bloc {
 				// Activier l'affichage des contours 
 				// Afficher le curseur main
 				// Dessiner
+				BlocEnd.this.gc.clearRect(0.0D, 0.0D, BlocEnd.this.sizeX, BlocEnd.this.sizeY);
+				BlocEnd.this.drawContour = true;
+				BlocEnd.this.setCursor(Cursor.HAND);
+				BlocEnd.this.draw();
 			}
 		});
 		
@@ -72,6 +76,8 @@ public class BlocEnd extends Bloc {
 			public void handle(MouseEvent t) {
 				// Activer le scroll du panneau
 				// Afficher le curseur main
+				Main.controleur.scroll.setPannable(true);
+				BlocEnd.this.setCursor(Cursor.HAND);
 			}
 		});
 		
@@ -82,6 +88,11 @@ public class BlocEnd extends Bloc {
 					// Supprimer le bloc actuel
 					// Supprimer ses pins
 					// Supprimer les connections liés
+				if (t.getClickCount() == 2) {
+					Main.controleur.plateau.getChildren().remove(BlocEnd.this);
+					Main.controleur.plateau.getChildren().remove(BlocEnd.this.pinIn);
+					Main.controleur.deleteFreeWires(BlocEnd.this.pinIn);
+				}
 			}
 		});
 		
@@ -92,6 +103,10 @@ public class BlocEnd extends Bloc {
 				// Désactiver le dessin des contours
 				// Afficher le curseur par défaut
 				// Dessiner
+				BlocEnd.this.gc.clearRect(0.0D, 0.0D, BlocEnd.this.sizeX, BlocEnd.this.sizeY);
+				BlocEnd.this.drawContour = false;
+				BlocEnd.this.setCursor(Cursor.DEFAULT);
+				BlocEnd.this.draw();
 			}
 		});
 		
@@ -99,6 +114,8 @@ public class BlocEnd extends Bloc {
 			@Override
 			public void handle(MouseEvent t) {
 				// Mettre à jour le décalage du dessin par rapport à la souris : dx, dy
+				BlocEnd.this.dx = t.getX();
+				BlocEnd.this.dy = t.getY();
 			}
 		});
 		
@@ -110,6 +127,13 @@ public class BlocEnd extends Bloc {
 				// Mettre à jour la position du bloc
 				// Mettre à jour la positions de ses pins
 				// Mettre à jour les connections
+				Main.controleur.scroll.setPannable(false);
+				BlocEnd.this.setCursor(Cursor.CLOSED_HAND);
+				BlocEnd.this.setLayoutX(t.getX() + BlocEnd.this.getLayoutX() - BlocEnd.this.dx);
+				BlocEnd.this.setLayoutY(t.getY() + BlocEnd.this.getLayoutY() - BlocEnd.this.dy);
+				BlocEnd.this.pinIn.setLayoutX(t.getX() + BlocEnd.this.pinIn.getLayoutX() - BlocEnd.this.dx);
+				BlocEnd.this.pinIn.setLayoutY(t.getY() + BlocEnd.this.pinIn.getLayoutY() - BlocEnd.this.dy);
+				Main.controleur.updateWires();
 			}
 		});
 	}

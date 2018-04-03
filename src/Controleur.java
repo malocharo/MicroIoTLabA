@@ -49,29 +49,35 @@ public class Controleur implements Initializable {
 			BlocEnd blocEnd = new BlocEnd(e.getX(), e.getY());
 			plateau.getChildren().add(blocEnd);
 			blocEnd.allToFront();
+			choix = NONE;
 		}
 		if(choix == LEDS) {
 			BlocLeds blocLeds = new BlocLeds(e.getX(), e.getY());
 			plateau.getChildren().add(blocLeds);
 			blocLeds.allToFront();
+			choix = NONE;
 		}
 		if(choix == DELAY) {
 			BlocDelay blocDelay = new BlocDelay(e.getX(), e.getY());
 			plateau.getChildren().add(blocDelay);
 			blocDelay.allToFront();
+			choix = NONE;
 		}
 		if(choix == LOOP) {
 			BlocLoop blocLoop = new BlocLoop(e.getX(), e.getY());
 			plateau.getChildren().add(blocLoop);
 			blocLoop.allToFront();
+			choix = NONE;
 		}
 		if(choix == BEAGLE_BONE) {
 			BeagleBone beagle_bone = new BeagleBone(e.getX(), e.getY());
 			plateau.getChildren().add(beagle_bone);
+			choix = NONE;
 		}
 		if(choix == ARDUINO) {
 			Arduino arduino = new Arduino(e.getX(), e.getY());
 			plateau.getChildren().add(arduino);
+			choix = NONE;
 		}
 	}
 		

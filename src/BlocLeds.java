@@ -52,6 +52,13 @@ public class BlocLeds extends BlocWith2Pins {
 	@Override
 	public void execute() {
 		// Mettre à jour les leds
+		if (SimulationPlatform.card1 != null) {
+			SimulationPlatform.card1.runCommand(this.leds);
+		}
+
+		if (SimulationPlatform.card2 != null) {
+			SimulationPlatform.card2.runCommand(this.leds);
+		}
 	}
 		
 }
